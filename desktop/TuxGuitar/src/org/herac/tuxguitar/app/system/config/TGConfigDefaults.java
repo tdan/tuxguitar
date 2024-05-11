@@ -43,7 +43,7 @@ public class TGConfigDefaults{
 		loadProperty(properties, TGConfigKeys.SHOW_EDIT_TOOLBAR, true);
 		loadProperty(properties, TGConfigKeys.SHOW_TRACKS, true);
 		loadProperty(properties, TGConfigKeys.LAYOUT_MODE, TGLayout.MODE_VERTICAL);
-		loadProperty(properties, TGConfigKeys.LAYOUT_STYLE, (TGLayout.DISPLAY_TABLATURE | TGLayout.DISPLAY_SCORE | TGLayout.DISPLAY_COMPACT | TGLayout.DISPLAY_CHORD_DIAGRAM));
+		loadProperty(properties, TGConfigKeys.LAYOUT_STYLE, (TGLayout.DISPLAY_TABLATURE | TGLayout.DISPLAY_SCORE | TGLayout.DISPLAY_COMPACT | TGLayout.DISPLAY_CHORD_DIAGRAM | TGLayout.HIGHLIGHT_PLAYED_BEAT));
 		loadProperty(properties, TGConfigKeys.LANGUAGE, "");
 		loadProperty(properties, TGConfigKeys.EDITOR_MOUSE_MODE, EditorKit.MOUSE_MODE_SELECTION);
 		loadProperty(properties, TGConfigKeys.EDITOR_NATURAL_KEY_MODE, true);
@@ -64,13 +64,15 @@ public class TGConfigDefaults{
 		loadProperty(properties, TGConfigKeys.FONT_ABOUT_DIALOG_TITLE, (DEFAULT_FONT_NAME + ",36,true,true"));
 		loadProperty(properties, TGConfigKeys.COLOR_FOREGROUND, "0,0,0");
 		loadProperty(properties, TGConfigKeys.COLOR_BACKGROUND, "255,255,255");
+		loadProperty(properties, TGConfigKeys.COLOR_BACKGROUND_PLAYING, "225,255,225");
 		loadProperty(properties, TGConfigKeys.COLOR_LINE, "214,214,214");
 		loadProperty(properties, TGConfigKeys.COLOR_SCORE_NOTE, "64,64,64");
 		loadProperty(properties, TGConfigKeys.COLOR_TAB_NOTE, "64,64,64");
 		loadProperty(properties, TGConfigKeys.COLOR_PLAY_NOTE, "255,0,0");
 		loadProperty(properties, TGConfigKeys.COLOR_SELECTION, "116,152,208");
-		loadProperty(properties, TGConfigKeys.COLOR_CARET_1, "127,127,127");
-		loadProperty(properties, TGConfigKeys.COLOR_CARET_2, "165,42,42");
+		loadProperty(properties, TGConfigKeys.COLOR_CARET_CURRENT_VOICE, "5,5,5");
+		loadProperty(properties, TGConfigKeys.COLOR_CARET_OTHER_VOICE, "200,10,10");
+		loadProperty(properties, TGConfigKeys.COLOR_CARET_ALPHA, "12");
 		loadProperty(properties, TGConfigKeys.COLOR_LOOP_S_MARKER, "42,165,42");
 		loadProperty(properties, TGConfigKeys.COLOR_LOOP_E_MARKER, "165,42,42");
 		loadProperty(properties, TGConfigKeys.COLOR_MEASURE_NUMBER, "128,0,0");
