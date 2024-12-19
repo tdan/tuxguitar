@@ -1,6 +1,6 @@
 # Install TuxGuitar
 
-You can find ready to use installation packages for Linux, Windows, MacOS, FreeBSD and Android on
+You can find ready to use installation packages for Linux, Windows, macOS, FreeBSD and Android on
 
 [https://github.com/helge17/tuxguitar/releases/](https://github.com/helge17/tuxguitar/releases/)
 
@@ -16,12 +16,14 @@ For hints and workarounds needed to build TuxGuitar, see the script
 misc/build_tuxguitar_from_source.sh
 ```
 
+You can also try to build TuxGuitar using the [GitHub Actions](https://docs.github.com/en/actions) defined in the `.github` folder.
+
 ## Prerequisites
 
 - JDK 9 or higher
 - Maven 3.3 or higher
-- Fluidsynth (optional)
-- JACK (optional)
+- FluidSynth (optional)
+- Jack (optional)
 - Eclipse SWT 4
 
 ## Build on Debian/Ubuntu Linux
@@ -29,7 +31,7 @@ misc/build_tuxguitar_from_source.sh
 ### Install Prerequisites
 
 ```sh
-$ sudo apt install wget unzip git build-essential default-jdk maven libwebkit2gtk-4.0-37 libfluidsynth-dev libjack-jackd2-dev libasound2-dev liblilv-dev libsuil-dev qtbase5-dev
+$ sudo apt install wget unzip git build-essential default-jdk maven libwebkit2gtk-4.1-0 libfluidsynth-dev libjack-jackd2-dev libasound2-dev liblilv-dev libsuil-dev qtbase5-dev
 ```
 
 In order for Asian characters to be displayed correctly, you may also need to install the `fonts-wqy-zenhei` font package.
@@ -97,11 +99,11 @@ $ sudo apt install wget unzip git default-jdk maven gcc-mingw-w64-x86-64 g++-min
 ### Download and install SWT for Windows
 
 ```sh
-$ wget https://archive.eclipse.org/eclipse/downloads/drops4/R-4.21-202109060500/swt-4.21-win32-win32-x86_64.zip
-$ mkdir swt-4.21-win32-win32-x86_64
-$ cd swt-4.21-win32-win32-x86_64
-$ unzip ../swt-4.21-win32-win32-x86_64.zip
-$ mvn install:install-file -Dfile=swt.jar -DgroupId=org.eclipse.swt -DartifactId=org.eclipse.swt.win32.win32 -Dpackaging=jar -Dversion=4.21
+$ wget https://archive.eclipse.org/eclipse/downloads/drops4/R-4.26-202211231800/swt-4.26-win32-win32-x86_64.zip
+$ mkdir swt-4.26-win32-win32-x86_64
+$ cd swt-4.26-win32-win32-x86_64
+$ unzip ../swt-4.26-win32-win32-x86_64.zip
+$ mvn install:install-file -Dfile=swt.jar -DgroupId=org.eclipse.swt -DartifactId=org.eclipse.swt.win32.win32 -Dpackaging=jar -Dversion=4.26
 $ cd ..
 ```
 
@@ -123,9 +125,9 @@ The Windows application is now located in the `desktop/build-scripts/tuxguitar-w
 
 To start TuxGuitar you need a Java Runtime Environment. You can get the one from [portableapps.com](https://portableapps.com/apps/utilities/OpenJDK64) and extract it to a subfolder named `jre`. Then you should be able to start TuxGuitar by double-clicking on `tuxguitar.exe` or `tuxguitar.bat`.
 
-## Build on MacOS
+## Build on macOS
 
-On MacOS you need to download and install [Homebrew](https://brew.sh) to build TuxGuitar.
+On macOS you need to download and install [Homebrew](https://brew.sh) to build TuxGuitar.
 
 ### Install Prerequisites
 
@@ -133,14 +135,14 @@ On MacOS you need to download and install [Homebrew](https://brew.sh) to build T
 $ brew install openjdk maven wget
 ```
 
-### Download and install SWT for MacOS
+### Download and install SWT for macOS
 
 ```sh
-$ wget https://archive.eclipse.org/eclipse/downloads/drops4/R-4.13-201909161045/swt-4.13-cocoa-macosx-`uname -m`.zip
-$ mkdir swt-4.13-cocoa-macosx-`uname -m`
-$ cd swt-4.13-cocoa-macosx-`uname -m`
-$ unzip ../swt-4.13-cocoa-macosx-`uname -m`.zip
-$ mvn install:install-file -Dfile=swt.jar -DgroupId=org.eclipse.swt -DartifactId=org.eclipse.swt.cocoa.macosx -Dpackaging=jar -Dversion=4.13
+$ wget https://archive.eclipse.org/eclipse/downloads/drops4/R-4.14-201912100610/swt-4.14-cocoa-macosx-`uname -m`.zip
+$ mkdir swt-4.14-cocoa-macosx-`uname -m`
+$ cd swt-4.14-cocoa-macosx-`uname -m`
+$ unzip ../swt-4.14-cocoa-macosx-`uname -m`.zip
+$ mvn install:install-file -Dfile=swt.jar -DgroupId=org.eclipse.swt -DartifactId=org.eclipse.swt.cocoa.macosx -Dpackaging=jar -Dversion=4.14
 $ cd ..
 ```
 
@@ -152,7 +154,7 @@ Same as for Debian (see above).
 
 ```sh
 $ cd desktop/build-scripts/tuxguitar-macosx-swt-cocoa
-$ mvn -e clean verify
+$ mvn -e clean verify -P native-modules
 $ cd -
 ```
 

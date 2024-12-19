@@ -73,9 +73,11 @@ public class Tablature implements TGController {
 		this.disposeUnregisteredResources.process();
 	}
 	
-	public void updateMeasures(List<Integer> numbers){
+	public void updateMeasures(List<Integer> numbers, boolean updateCaret){
 		this.getViewLayout().updateMeasureNumbers(numbers);
-		this.getCaret().update();
+		if (!numbers.isEmpty() || updateCaret) {
+			this.getCaret().update();
+		}
 		this.disposeUnregisteredResources.process();
 	}
 	
@@ -192,8 +194,9 @@ public class Tablature implements TGController {
 	public void loadCaretStyles() {
 		TGConfigManager config = TGConfigManager.getInstance(this.context);
 		
-		getCaret().setColor1(config.getColorModelConfigValue(TGConfigKeys.COLOR_CARET_1));
-		getCaret().setColor2(config.getColorModelConfigValue(TGConfigKeys.COLOR_CARET_2));
+		getCaret().setColorCurrentVoice(config.getColorModelConfigValue(TGConfigKeys.COLOR_CARET_CURRENT_VOICE));
+		getCaret().setColorOtherVoice(config.getColorModelConfigValue(TGConfigKeys.COLOR_CARET_OTHER_VOICE));
+		getCaret().setAlpha(config.getIntegerValue(TGConfigKeys.COLOR_CARET_ALPHA));
 	}
 	
 	public void scale(Float scale) {
@@ -240,12 +243,16 @@ public class Tablature implements TGController {
 	
 	public boolean isLoopSHeader(TGMeasureHeader measureHeader){
 		MidiPlayerMode pm = TuxGuitar.getInstance().getPlayer().getMode();
-		return ( pm.isLoop() && pm.getLoopSHeader() == measureHeader.getNumber() );
+		return ( pm.isLoop() &&
+				(pm.getLoopSHeader() == measureHeader.getNumber()
+					|| (pm.getLoopSHeader() == -1 && measureHeader.getNumber()==1)) );
 	}
 	
 	public boolean isLoopEHeader(TGMeasureHeader measureHeader){
 		MidiPlayerMode pm = TuxGuitar.getInstance().getPlayer().getMode();
-		return ( pm.isLoop() && pm.getLoopEHeader() == measureHeader.getNumber() );
+		return ( pm.isLoop() &&
+				(pm.getLoopEHeader() == measureHeader.getNumber()
+					|| (pm.getLoopEHeader() == -1 && measureHeader.getNumber()==measureHeader.getSong().countMeasureHeaders())) );
 	}
 	
 	public TGLayoutStyles getStyles() {
