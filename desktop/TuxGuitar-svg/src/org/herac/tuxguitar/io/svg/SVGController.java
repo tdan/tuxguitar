@@ -5,6 +5,7 @@ import org.herac.tuxguitar.graphics.control.TGFactoryImpl;
 import org.herac.tuxguitar.graphics.control.TGLayoutStyles;
 import org.herac.tuxguitar.graphics.control.TGLayoutVertical;
 import org.herac.tuxguitar.graphics.control.TGResourceBuffer;
+import org.herac.tuxguitar.graphics.control.TGSvgLayout;
 import org.herac.tuxguitar.io.base.TGFileFormatException;
 import org.herac.tuxguitar.song.managers.TGSongManager;
 import org.herac.tuxguitar.song.models.TGBeat;
@@ -25,7 +26,7 @@ public class SVGController implements TGController {
 	private TGSongManager tgSongManager;
 	private TGResourceBuffer tgResourceBuffer;
 	private UIResourceFactory tgResourceFactory;
-	private TGLayoutVertical tgLayout;
+	private TGSvgLayout tgLayout;
 	
 	public SVGController(SVGStyles tgStyles){
 		this.tgStyles = tgStyles;
@@ -33,7 +34,7 @@ public class SVGController implements TGController {
 		this.tgSongManager.setFactory(new TGFactoryImpl());
 		this.tgResourceFactory = new SVGResourceFactory();
 		this.tgResourceBuffer = new TGResourceBuffer();
-		this.tgLayout = new TGLayoutVertical(this, this.tgStyles.getFlags() );
+		this.tgLayout = new TGSvgLayout(this, this.tgStyles.getFlags() );
 	}
 	
 	public TGSongManager getSongManager() {
@@ -81,13 +82,7 @@ public class SVGController implements TGController {
 			svgPainter.closePath();
 			svgBackground.dispose();
 			
-			/** Paint head of the song to SVG first
-			  *
-			  * TODO: We can implement paintHeader() inside TGLayoutVertical
-			  * if we want code to be consistent with TGPrintLayout.
-			  * The side/nice effect is that main UI will show song details     
-			  * before the tab.	 
-			  */
+			// Paint header with song info first
 			float headerOffset = 0f;
 			headerOffset += this.paintHeader(svgPainter, svgBounds, 0f, 10f);
 			
