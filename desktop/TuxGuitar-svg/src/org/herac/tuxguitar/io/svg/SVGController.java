@@ -5,7 +5,6 @@ import org.herac.tuxguitar.graphics.control.TGFactoryImpl;
 import org.herac.tuxguitar.graphics.control.TGLayoutStyles;
 import org.herac.tuxguitar.graphics.control.TGLayoutVertical;
 import org.herac.tuxguitar.graphics.control.TGResourceBuffer;
-import org.herac.tuxguitar.graphics.control.TGSvgLayout;
 import org.herac.tuxguitar.io.base.TGFileFormatException;
 import org.herac.tuxguitar.song.managers.TGSongManager;
 import org.herac.tuxguitar.song.models.TGBeat;
@@ -26,7 +25,7 @@ public class SVGController implements TGController {
 	private TGSongManager tgSongManager;
 	private TGResourceBuffer tgResourceBuffer;
 	private UIResourceFactory tgResourceFactory;
-	private TGSvgLayout tgLayout;
+	private TGLayoutVertical tgLayout;
 	
 	public SVGController(SVGStyles tgStyles){
 		this.tgStyles = tgStyles;
@@ -34,7 +33,7 @@ public class SVGController implements TGController {
 		this.tgSongManager.setFactory(new TGFactoryImpl());
 		this.tgResourceFactory = new SVGResourceFactory();
 		this.tgResourceBuffer = new TGResourceBuffer();
-		this.tgLayout = new TGSvgLayout(this, this.tgStyles.getFlags() );
+		this.tgLayout = new TGLayoutVertical(this, this.tgStyles.getFlags() );
 	}
 	
 	public TGSongManager getSongManager() {
