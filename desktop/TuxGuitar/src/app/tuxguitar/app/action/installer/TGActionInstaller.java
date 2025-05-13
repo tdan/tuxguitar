@@ -122,6 +122,7 @@ import app.tuxguitar.app.action.impl.track.TGOpenTrackTuningDialogAction;
 import app.tuxguitar.app.action.impl.track.TGToggleLyricEditorAction;
 import app.tuxguitar.app.action.impl.transport.TGOpenTransportModeDialogAction;
 import app.tuxguitar.app.action.impl.transport.TGTransportCountDownAction;
+import app.tuxguitar.app.action.impl.transport.TGTransportCountDownTicksAction;
 import app.tuxguitar.app.action.impl.transport.TGTransportMetronomeAction;
 import app.tuxguitar.app.action.impl.transport.TGTransportModeAction;
 import app.tuxguitar.app.action.impl.transport.TGTransportPlayPauseAction;
@@ -476,6 +477,7 @@ public class TGActionInstaller {
 		installAction(new TGTransportStopAction(context));
 		installAction(new TGTransportMetronomeAction(context));
 		installAction(new TGTransportCountDownAction(context));
+		installAction(new TGTransportCountDownTicksAction(context));
 		installAction(new TGTransportModeAction(context));
 		installAction(new TGTransportSetLoopSHeaderAction(context));
 		installAction(new TGTransportSetLoopEHeaderAction(context));
