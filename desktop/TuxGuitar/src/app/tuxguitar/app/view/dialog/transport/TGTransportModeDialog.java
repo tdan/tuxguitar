@@ -50,34 +50,60 @@ public class TGTransportModeDialog {
 	protected UISpinner customFrom;
 	protected UISpinner customTo;
 	protected UISpinner customIncrement;
+	
+	protected MidiPlayer player;
 
 	protected UIDropDownSelect<Integer> loopSHeader;
 	protected UIDropDownSelect<Integer> loopEHeader;
 
 	public TGTransportModeDialog(TGViewContext context){
 		this.context = context;
+		this.player = MidiPlayer.getInstance(this.context.getContext());
 	}
 
 	public void show(){
-		final MidiPlayerMode mode = MidiPlayer.getInstance(this.context.getContext()).getMode();
+		//final MidiPlayerMode mode = MidiPlayer.getInstance(this.context.getContext()).getMode();
+		final MidiPlayerMode mode = this.player.getMode();
 		final UIFactory uiFactory = TGApplication.getInstance(context.getContext()).getFactory();
 		final UIWindow uiParent = this.context.getAttribute(TGViewContext.ATTRIBUTE_PARENT);
 		final UITableLayout dialogLayout = new UITableLayout();
 		final UIWindow dialog = uiFactory.createWindow(uiParent, true, false);
 		final TGBeatRange beats = this.context.getAttribute(TGDocumentContextAttributes.ATTRIBUTE_BEAT_RANGE);
 		boolean isSelectionActive = Boolean.TRUE.equals(this.context.getAttribute(TGDocumentContextAttributes.ATTRIBUTE_SELECTION_IS_ACTIVE));
-
+		
+		
 		dialog.setLayout(dialogLayout);
 		dialog.setText(TuxGuitar.getProperty("transport.mode"));
 
 		// ----------------------------------------------------------------------
-
+		
+		//---Count Down Ticks---
+		UITableLayout countDownTicksLayout = new UITableLayout();
+		UILegendPanel countDownTicksPanel = uiFactory.createLegendPanel(dialog);
+		countDownTicksPanel.setLayout(countDownTicksLayout);
+		dialogLayout.set(countDownTicksPanel, 1, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_CENTER, true, true);
+		
+		UILabel countDownTicksLabel = uiFactory.createLabel(countDownTicksPanel);
+		countDownTicksLabel.setText(TuxGuitar.getProperty("transport.count-down-ticks") + ":");
+		countDownTicksLayout.set(countDownTicksLabel, 1, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_CENTER, false, true);
+		countDownTicksLabel.setEnabled(this.player.getCountDown().isEnabled());
+		
+		UISpinner countDownTicks = uiFactory.createSpinner(countDownTicksPanel);
+		countDownTicks.setMinimum(0);
+		countDownTicks.setMaximum(100);
+		countDownTicks.setValue(this.player.getCountDown().getTickCount());	
+		countDownTicksLayout.set(countDownTicks, 1, 2, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_CENTER, false, true);
+		countDownTicks.setEnabled(this.player.getCountDown().isEnabled());
+		
+		SingleSpinnerAdapter countDownTicksAdataper = new SingleSpinnerAdapter(this.player, countDownTicks);
+		countDownTicks.addSelectionListener(countDownTicksAdataper);
+		
 		//---Simple---
 		this.simple = uiFactory.createRadioButton(dialog);
 		this.simple.setText(TuxGuitar.getProperty("transport.mode.simple"));
 		this.simple.setSelected(mode.getType() == MidiPlayerMode.TYPE_SIMPLE);
 		this.simple.setFocus();
-		dialogLayout.set(this.simple, 1, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_FILL, true, true);
+		dialogLayout.set(this.simple, 2, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_FILL, true, true);
 		RadioSelectionAdapter simpleAdapter = new RadioSelectionAdapter(this.simple);
 
 		UITableLayout simpleLayout = new UITableLayout();
@@ -85,8 +111,8 @@ public class TGTransportModeDialog {
 		simpleGroup.setLayout(simpleLayout);
 		simpleGroup.setText(TuxGuitar.getProperty("transport.mode.simple"));
 		simpleAdapter.addControl(simpleGroup);
-		dialogLayout.set(simpleGroup, 2, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_FILL, true, true);
-
+		dialogLayout.set(simpleGroup, 3, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_FILL, true, true);
+		
 		UILabel simplePercentLabel = uiFactory.createLabel(simpleGroup);
 		simplePercentLabel.setText(TuxGuitar.getProperty("transport.mode.simple.tempo-percent") + ":");
 		simpleLayout.set(simplePercentLabel, 1, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_CENTER, false, true);
@@ -114,7 +140,7 @@ public class TGTransportModeDialog {
 		this.custom = uiFactory.createRadioButton(dialog);
 		this.custom.setText(TuxGuitar.getProperty("transport.mode.trainer"));
 		this.custom.setSelected(mode.getType() == MidiPlayerMode.TYPE_CUSTOM);
-		dialogLayout.set(this.custom, 3, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_FILL, true, true);
+		dialogLayout.set(this.custom, 4, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_FILL, true, true);
 		RadioSelectionAdapter customAdapter = new RadioSelectionAdapter(this.custom);
 
 		UITableLayout customLayout = new UITableLayout();
@@ -122,7 +148,7 @@ public class TGTransportModeDialog {
 		customGroup.setLayout(customLayout);
 		customGroup.setText(TuxGuitar.getProperty("transport.mode.trainer"));
 		customAdapter.addControl(customGroup);
-		dialogLayout.set(customGroup, 4, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_FILL, true, true);
+		dialogLayout.set(customGroup, 5, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_FILL, true, true);
 
 		UILabel tempoLabel = uiFactory.createLabel(customGroup);
 		tempoLabel.setText(TuxGuitar.getProperty("composition.tempo") + ":");
@@ -187,7 +213,7 @@ public class TGTransportModeDialog {
 		UILegendPanel rangeGroup = uiFactory.createLegendPanel(dialog);
 		rangeGroup.setLayout(rangeLayout);
 		rangeGroup.setText(TuxGuitar.getProperty("transport.mode.loop-range"));
-		dialogLayout.set(rangeGroup, 5, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_FILL, true, true);
+		dialogLayout.set(rangeGroup, 6, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_FILL, true, true);
 		mHeaderRangeStatus.addControl(rangeGroup);
 
 		UILabel loopSLabel = uiFactory.createLabel(rangeGroup);
@@ -226,7 +252,7 @@ public class TGTransportModeDialog {
 		UITableLayout buttonsLayout = new UITableLayout(0f);
 		UIPanel buttons = uiFactory.createPanel(dialog, false);
 		buttons.setLayout(buttonsLayout);
-		dialogLayout.set(buttons, 6, 1, UITableLayout.ALIGN_RIGHT, UITableLayout.ALIGN_FILL, true, true);
+		dialogLayout.set(buttons, 7, 1, UITableLayout.ALIGN_RIGHT, UITableLayout.ALIGN_FILL, true, true);
 
 		UIButton buttonOK = uiFactory.createButton(buttons);
 		buttonOK.setText(TuxGuitar.getProperty("ok"));
@@ -344,6 +370,25 @@ public class TGTransportModeDialog {
 				this.increment.setValue(this.to.getValue() - this.from.getValue());
 			}
 		}
+	}
+	
+	private class SingleSpinnerAdapter implements UISelectionListener {
+		
+		private UISpinner control;
+		private MidiPlayer player;
+
+		public SingleSpinnerAdapter(MidiPlayer player, UISpinner control) {
+			this.player = player;
+			this.control = control;
+		}
+
+		@Override
+		public void onSelect(UISelectionEvent event) {
+			if( event.getComponent().equals(this.control) ) {
+				this.player.getCountDown().setTickCount(this.control.getValue());
+			}
+		}
+		
 	}
 
 	private class MHeaderRangeStatus implements UISelectionListener {

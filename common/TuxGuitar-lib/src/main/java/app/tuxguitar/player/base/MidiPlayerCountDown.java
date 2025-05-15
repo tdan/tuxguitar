@@ -114,6 +114,10 @@ public class MidiPlayerCountDown {
 		this.tickCount = ticks;
 	}
 	
+	public int getTickCount() {
+		return this.tickCount;
+	}
+	
 	public void setTempoPercent(int tempoPercent) {
 		this.tempoPercent = tempoPercent;
 	}
