@@ -3,7 +3,6 @@ package app.tuxguitar.app.view.menu.impl;
 import app.tuxguitar.app.TuxGuitar;
 import app.tuxguitar.app.action.impl.transport.TGOpenTransportModeDialogAction;
 import app.tuxguitar.app.action.impl.transport.TGTransportCountDownAction;
-import app.tuxguitar.app.action.impl.transport.TGTransportCountDownTicksAction;
 import app.tuxguitar.app.action.impl.transport.TGTransportMetronomeAction;
 import app.tuxguitar.app.action.impl.transport.TGTransportPlayPauseAction;
 import app.tuxguitar.app.action.impl.transport.TGTransportSetLoopEHeaderAction;
@@ -29,7 +28,6 @@ public class TransportMenuItem extends TGMenuItem {
 	private UIMenuActionItem stop;
 	private UIMenuCheckableItem metronome;
 	private UIMenuCheckableItem countDown;
-	private UIMenuActionItem countDownTicks;
 	private UIMenuActionItem mode;
 	private UIMenuCheckableItem loopSHeader;
 	private UIMenuCheckableItem loopEHeader;
@@ -61,10 +59,6 @@ public class TransportMenuItem extends TGMenuItem {
 		this.countDown = this.transportMenuItem.getMenu().createCheckItem();
 		this.countDown.addSelectionListener(this.createActionProcessor(TGTransportCountDownAction.NAME));
 		
-		//--COUNTDOWN TICKS--
-		this.countDownTicks = this.transportMenuItem.getMenu().createActionItem();
-		this.countDownTicks.addSelectionListener(this.createActionProcessor(TGTransportCountDownTicksAction.NAME));
-
 		//--MODE--
 		this.mode = this.transportMenuItem.getMenu().createActionItem();
 		this.mode.addSelectionListener(this.createActionProcessor(TGOpenTransportModeDialogAction.NAME));
@@ -115,7 +109,6 @@ public class TransportMenuItem extends TGMenuItem {
 		setMenuItemTextAndAccelerator(this.mode, "transport.mode", TGOpenTransportModeDialogAction.NAME);
 		setMenuItemTextAndAccelerator(this.metronome, "transport.metronome", TGTransportMetronomeAction.NAME);
 		setMenuItemTextAndAccelerator(this.countDown, "transport.count-down", TGTransportCountDownAction.NAME);
-		setMenuItemTextAndAccelerator(this.countDownTicks, "transport.count-down-ticks", TGTransportCountDownTicksAction.NAME);
 		setMenuItemTextAndAccelerator(this.loopSHeader, "transport.set-loop-start", TGTransportSetLoopSHeaderAction.NAME);
 		setMenuItemTextAndAccelerator(this.loopEHeader, "transport.set-loop-end", TGTransportSetLoopEHeaderAction.NAME);
 		setMenuItemTextAndAccelerator(this.highlightPlayedBeat, "transport.highlight-played-beat", TGToggleHighlightPlayedBeatAction.NAME);
@@ -145,4 +138,5 @@ public class TransportMenuItem extends TGMenuItem {
 			}
 		}
 	}
+
 }

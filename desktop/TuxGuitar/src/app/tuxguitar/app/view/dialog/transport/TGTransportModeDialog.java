@@ -77,30 +77,59 @@ public class TGTransportModeDialog {
 
 		// ----------------------------------------------------------------------
 		
-		//---Count Down Ticks---
+		//---Count Down---
 		UITableLayout countDownTicksLayout = new UITableLayout();
 		UILegendPanel countDownTicksPanel = uiFactory.createLegendPanel(dialog);
 		countDownTicksPanel.setLayout(countDownTicksLayout);
 		dialogLayout.set(countDownTicksPanel, 1, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_CENTER, true, true);
 		
+		UILabel countDownLabel = uiFactory.createLabel(countDownTicksPanel);
+		countDownLabel.setText(TuxGuitar.getProperty("transport.count-down"));
+		countDownTicksLayout.set(countDownLabel, 1, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_CENTER, false, true);
+		countDownLabel.setEnabled(true);
+		
+		UICheckBox countDownCheckBox = uiFactory.createCheckBox(countDownTicksPanel);
+		countDownTicksLayout.set(countDownCheckBox, 1, 2, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_CENTER, false, true);
+		countDownCheckBox.setEnabled(true);
+		countDownCheckBox.setSelected(this.player.getCountDown().isEnabled());
+		
 		UILabel countDownTicksLabel = uiFactory.createLabel(countDownTicksPanel);
 		countDownTicksLabel.setText(TuxGuitar.getProperty("transport.count-down-ticks") + ":");
-		countDownTicksLayout.set(countDownTicksLabel, 1, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_CENTER, false, true);
+		countDownTicksLayout.set(countDownTicksLabel, 2, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_CENTER, false, true);
 		countDownTicksLabel.setEnabled(this.player.getCountDown().isEnabled());
 		
 		UISpinner countDownTicks = uiFactory.createSpinner(countDownTicksPanel);
 		countDownTicks.setMinimum(0);
 		countDownTicks.setMaximum(100);
-		countDownTicks.setValue(this.player.getCountDown().getTickCount());	
-		countDownTicksLayout.set(countDownTicks, 1, 2, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_CENTER, false, true);
+		
+		if ( this.player.getCountDown().getTickCount() == 0 ) // set default value for count down ticks
+			countDownTicks.setValue(this.player.getSong().getMeasureHeader(0).getTimeSignature().getNumerator());
+		else
+			countDownTicks.setValue(this.player.getCountDown().getTickCount());
+		
+		countDownTicksLayout.set(countDownTicks, 2, 2, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_CENTER, false, true);
 		countDownTicks.setEnabled(this.player.getCountDown().isEnabled());
 		
-		SingleSpinnerAdapter countDownTicksAdataper = new SingleSpinnerAdapter(this.player, countDownTicks);
-		countDownTicks.addSelectionListener(countDownTicksAdataper);
+		countDownCheckBox.addSelectionListener(new UISelectionListener() {
+			@Override
+			public void onSelect(UISelectionEvent event) {
+				TGTransportModeDialog.this.player.getCountDown().setEnabled(countDownCheckBox.isSelected());
+				TGTransportModeDialog.this.player.getCountDown().setTickCount(countDownTicks.getValue());
+				countDownTicksLabel.setEnabled(countDownCheckBox.isSelected());
+				countDownTicks.setEnabled(countDownCheckBox.isSelected());
+			}
+		});
+		
+		countDownTicks.addSelectionListener(new UISelectionListener() {
+			@Override
+			public void onSelect(UISelectionEvent event) {
+				TGTransportModeDialog.this.player.getCountDown().setTickCount(countDownTicks.getValue());
+			}
+		});
 		
 		//---Simple---
 		this.simple = uiFactory.createRadioButton(dialog);
-		this.simple.setText(TuxGuitar.getProperty("transport.mode.simple"));
+		this.simple.setText(TuxGuitar.getProperty("transport.mode.simple")); 
 		this.simple.setSelected(mode.getType() == MidiPlayerMode.TYPE_SIMPLE);
 		this.simple.setFocus();
 		dialogLayout.set(this.simple, 2, 1, UITableLayout.ALIGN_FILL, UITableLayout.ALIGN_FILL, true, true);
@@ -372,12 +401,12 @@ public class TGTransportModeDialog {
 		}
 	}
 	
-	private class SingleSpinnerAdapter implements UISelectionListener {
+	private class CountDownTickAdapter implements UISelectionListener {
 		
 		private UISpinner control;
 		private MidiPlayer player;
 
-		public SingleSpinnerAdapter(MidiPlayer player, UISpinner control) {
+		public CountDownTickAdapter(MidiPlayer player, UISpinner control) {
 			this.player = player;
 			this.control = control;
 		}
