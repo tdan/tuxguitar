@@ -57,7 +57,7 @@ public class TGMainToolBar extends TGToolBarModel {
 
 		UIToolBar centerRightToolBar = uiFactory.createHorizontalToolBar(this.panel);
 		this.createSection(new TGMainToolBarSectionDivider(getContext(), centerRightToolBar));
-		this.createSection(new TGMainToolBarSectionTransportMode(getContext(), centerRightToolBar));
+		this.createSection(new TGMainToolBarSectionTransportMode(getContext(), centerRightToolBar, transportLayout, this.panel));
 		transportLayout.set(centerRightToolBar, 1,6, UITableLayout.ALIGN_LEFT, UITableLayout.ALIGN_FILL, true, true);
 
 	}
