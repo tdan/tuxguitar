@@ -19,6 +19,7 @@ import app.tuxguitar.app.action.impl.transport.TGTransportPlayPauseAction;
 import app.tuxguitar.app.action.impl.transport.TGTransportStopAction;
 import app.tuxguitar.app.system.icons.TGColorManager;
 import app.tuxguitar.app.system.icons.TGColorManager.TGSkinnableColor;
+import app.tuxguitar.app.system.icons.TGIconManager;
 import app.tuxguitar.app.system.icons.TGSkinEvent;
 import app.tuxguitar.app.system.language.TGLanguageEvent;
 import app.tuxguitar.app.transport.TGTransport;
@@ -176,27 +177,17 @@ public class TGTransportDialog implements TGEventListener {
 		MidiPlayer player = MidiPlayer.getInstance(this.context);
 		
 		this.countInToggle = factory.createToggleButton(composite);
-		this.countInToggle.setToolTipText(TuxGuitar.getProperty("transport.count-down"));
-		this.countInToggle.setSelected(player.getCountDown().isEnabled());
 		this.countInToggle.addSelectionListener(new TGActionProcessorListener(this.context, TGTransportCountDownAction.NAME));
 		
 		this.countInTicks = factory.createSpinner(composite);
-		this.countInTicks.setEnabled(player.getCountDown().isEnabled());
 		if (player.getCountDown().getTickCount() == 0)
 			this.countInTicks.setValue(player.getSong().getMeasureHeader(0).getTimeSignature().getNumerator());
 		else
 			this.countInTicks.setValue(player.getCountDown().getTickCount());
-		
 		this.countInTicks.addSelectionListener(new UISelectionListener() {
 			@Override
 			public void onSelect(UISelectionEvent event) {
 				player.getCountDown().setTickCount(countInTicks.getValue());
-			}
-		});
-		this.countInToggle.addSelectionListener(new UISelectionListener() {
-			@Override
-			public void onSelect(UISelectionEvent event) {
-				countInTicks.setEnabled(!player.getCountDown().isEnabled());
 			}
 		});
 		
@@ -351,6 +342,9 @@ public class TGTransportDialog implements TGEventListener {
 			this.tickProgress.setMinimum((int)first.getStart());
 			this.tickProgress.setMaximum((int)(last.getStart() + last.getLength()) -1);
 			this.metronome.setSelected(player.isMetronomeEnabled());
+			this.countInToggle.setSelected(player.getCountDown().isEnabled());
+			this.countInTicks.setMinimum(1);
+			this.countInTicks.setEnabled(player.getCountDown().isEnabled());
 
 			this.redrawProgress();
 		}
@@ -366,6 +360,7 @@ public class TGTransportDialog implements TGEventListener {
 			this.next.setToolTipText(TuxGuitar.getProperty("transport.next"));
 			this.metronome.setToolTipText(TuxGuitar.getProperty("transport.metronome"));
 			this.mode.setToolTipText(TuxGuitar.getProperty("transport.mode"));
+			this.countInToggle.setToolTipText(TuxGuitar.getProperty("transport.count-down"));
 			this.loadPlayText();
 		}
 	}
@@ -385,9 +380,9 @@ public class TGTransportDialog implements TGEventListener {
 	}
 
 	private void loadOptionIcons(){
-		this.metronome.setImage(TuxGuitar.getInstance().getIconManager().getTransportMetronome());
-		this.mode.setImage(TuxGuitar.getInstance().getIconManager().getTransportMode());
-		this.countInToggle.setImage(TuxGuitar.getInstance().getIconManager().getTransportCountIn());
+		this.metronome.setImage(TuxGuitar.getInstance().getIconManager().getImageByName(TGIconManager.TRANSPORT_METRONOME));
+		this.mode.setImage(TuxGuitar.getInstance().getIconManager().getImageByName(TGIconManager.TRANSPORT_MODE));
+		this.countInToggle.setImage(TuxGuitar.getInstance().getIconManager().getImageByName(TGIconManager.TRANSPORT_COUNT_IN));
 	}
 
 	public void dispose() {
