@@ -343,8 +343,11 @@ public class TGTransportDialog implements TGEventListener {
 			// Set default spinner's value to first measure time signature or current count-in ticks.
 			// Default value will automatically update to correct count when user changes song,
 			// or play a section with different time signature.
+			
+			TGMeasureHeader currentHeader = getSongManager().getMeasureHeaderAt(player.getSong(), TablatureEditor.getInstance(this.context).getTablature().getCaret().getPosition());
+			
 			if (player.getCountDown().getTickCount() == 0)
-				this.countInTicks.setValue(first.getTimeSignature().getNumerator());
+				this.countInTicks.setValue(currentHeader.getTimeSignature().getNumerator());
 			else
 				this.countInTicks.setValue(player.getCountDown().getTickCount());
 			this.countInTicks.setEnabled(player.getCountDown().isEnabled());
