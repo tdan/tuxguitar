@@ -125,9 +125,6 @@ import app.tuxguitar.app.action.impl.transport.TGChangeTempoPercentageAction;
 import app.tuxguitar.app.action.impl.transport.TGDecrementTempoPercentageAction;
 import app.tuxguitar.app.action.impl.transport.TGIncrementTempoPercentageAction;
 import app.tuxguitar.app.action.impl.transport.TGOpenTransportModeDialogAction;
-import app.tuxguitar.app.action.impl.transport.TGTransportCountDownAction;
-import app.tuxguitar.app.action.impl.transport.TGTransportMetronomeAction;
-import app.tuxguitar.app.action.impl.transport.TGTransportModeAction;
 import app.tuxguitar.app.action.impl.transport.TGTransportPlayPauseAction;
 import app.tuxguitar.app.action.impl.transport.TGTransportPlayStopAction;
 import app.tuxguitar.app.action.impl.transport.TGTransportSetLoopEHeaderAction;
@@ -261,6 +258,9 @@ import app.tuxguitar.editor.action.track.TGSetTrackMuteAction;
 import app.tuxguitar.editor.action.track.TGSetTrackNameAction;
 import app.tuxguitar.editor.action.track.TGSetTrackSoloAction;
 import app.tuxguitar.editor.action.track.TGSetTrackStringCountAction;
+import app.tuxguitar.editor.action.transport.TGTransportCountDownAction;
+import app.tuxguitar.editor.action.transport.TGTransportMetronomeAction;
+import app.tuxguitar.editor.action.transport.TGTransportModeAction;
 import app.tuxguitar.util.TGContext;
 
 public class TGActionInstaller {
