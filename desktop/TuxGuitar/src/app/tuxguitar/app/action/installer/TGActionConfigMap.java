@@ -121,6 +121,8 @@ import app.tuxguitar.app.action.impl.track.TGOpenTrackPropertiesDialogAction;
 import app.tuxguitar.app.action.impl.track.TGOpenTrackTuningDialogAction;
 import app.tuxguitar.app.action.impl.track.TGToggleLyricEditorAction;
 import app.tuxguitar.app.action.impl.transport.TGChangeTempoPercentageAction;
+import app.tuxguitar.app.action.impl.transport.TGDecrementTempoPercentageAction;
+import app.tuxguitar.app.action.impl.transport.TGIncrementTempoPercentageAction;
 import app.tuxguitar.app.action.impl.transport.TGOpenTransportModeDialogAction;
 import app.tuxguitar.app.action.impl.transport.TGTransportCountDownAction;
 import app.tuxguitar.app.action.impl.transport.TGTransportMetronomeAction;
@@ -553,7 +555,9 @@ public class TGActionConfigMap extends TGActionMap<TGActionConfig> {
 		this.map(TGTransportModeAction.NAME, LOCKABLE);
 		this.map(TGTransportSetLoopSHeaderAction.NAME, LOCKABLE | SHORTCUT);
 		this.map(TGTransportSetLoopEHeaderAction.NAME, LOCKABLE | SHORTCUT);
-		this.map(TGChangeTempoPercentageAction.NAME, LOCKABLE | SHORTCUT);
+		this.map(TGChangeTempoPercentageAction.NAME, LOCKABLE);
+		this.map(TGIncrementTempoPercentageAction.NAME, DISABLE_ON_PLAY |LOCKABLE | SHORTCUT);
+		this.map(TGDecrementTempoPercentageAction.NAME, DISABLE_ON_PLAY | LOCKABLE | SHORTCUT);
 
 		//marker actions
 		this.map(TGUpdateMarkerAction.NAME, LOCKABLE, new TGUpdateModifiedMarkerController(), new TGUndoableMarkerGenericController());
