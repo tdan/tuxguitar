@@ -9,7 +9,7 @@ import app.tuxguitar.util.TGContext;
 
 public class TGIncrementTempoPercentageAction extends TGActionBase {
 
-	public static final String NAME = "action.transport.increase-tempo-percentage";
+	public static final String NAME = "action.transport.increment-tempo-percentage";
 
 	public TGIncrementTempoPercentageAction(TGContext context) {
 		super(context, NAME);

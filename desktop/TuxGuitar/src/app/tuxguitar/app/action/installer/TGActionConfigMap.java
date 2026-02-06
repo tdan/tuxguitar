@@ -556,8 +556,8 @@ public class TGActionConfigMap extends TGActionMap<TGActionConfig> {
 		this.map(TGTransportSetLoopSHeaderAction.NAME, LOCKABLE | SHORTCUT, UPDATE_SONG_CTL);
 		this.map(TGTransportSetLoopEHeaderAction.NAME, LOCKABLE | SHORTCUT, UPDATE_SONG_CTL);
         this.map(TGChangeTempoPercentageAction.NAME, LOCKABLE);
-		this.map(TGIncrementTempoPercentageAction.NAME, DISABLE_ON_PLAY |LOCKABLE | SHORTCUT);
-		this.map(TGDecrementTempoPercentageAction.NAME, DISABLE_ON_PLAY | LOCKABLE | SHORTCUT);
+		this.map(TGIncrementTempoPercentageAction.NAME, DISABLE_ON_PLAY | SHORTCUT);
+		this.map(TGDecrementTempoPercentageAction.NAME, DISABLE_ON_PLAY | SHORTCUT);
 
 		//marker actions
 		this.map(TGUpdateMarkerAction.NAME, LOCKABLE, new TGUpdateModifiedMarkerController(), new TGUndoableMarkerGenericController());
