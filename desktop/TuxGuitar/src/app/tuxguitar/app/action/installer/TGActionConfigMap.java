@@ -555,7 +555,7 @@ public class TGActionConfigMap extends TGActionMap<TGActionConfig> {
 		this.map(TGTransportModeAction.NAME, LOCKABLE, UPDATE_SONG_CTL);
 		this.map(TGTransportSetLoopSHeaderAction.NAME, LOCKABLE | SHORTCUT, UPDATE_SONG_CTL);
 		this.map(TGTransportSetLoopEHeaderAction.NAME, LOCKABLE | SHORTCUT, UPDATE_SONG_CTL);
-        this.map(TGChangeTempoPercentageAction.NAME, LOCKABLE);
+        this.map(TGChangeTempoPercentageAction.NAME, DISABLE_ON_PLAY);
 		this.map(TGIncrementTempoPercentageAction.NAME, DISABLE_ON_PLAY | SHORTCUT);
 		this.map(TGDecrementTempoPercentageAction.NAME, DISABLE_ON_PLAY | SHORTCUT);
 

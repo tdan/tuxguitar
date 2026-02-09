@@ -18,7 +18,13 @@ public class TGDecrementTempoPercentageAction extends TGActionBase {
 	@Override
 	protected void processAction(TGActionContext context) {
 		MidiPlayerMode mode = MidiPlayer.getInstance(getContext()).getMode();
-		int decreasedTempo = mode.getCurrentPercent() - 1;
+		int decreasedTempo;
+		
+		if (mode.getCurrentPercent() > 1) {
+			decreasedTempo = mode.getCurrentPercent() - 1;
+		} else {
+			decreasedTempo = 1;
+		}
 		
 		TGActionProcessor tgActionProcessor = new TGActionProcessor(getContext(), TGChangeTempoPercentageAction.NAME);
 		tgActionProcessor.setAttribute(

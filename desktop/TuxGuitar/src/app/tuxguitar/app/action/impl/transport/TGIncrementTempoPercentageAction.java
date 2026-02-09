@@ -18,7 +18,13 @@ public class TGIncrementTempoPercentageAction extends TGActionBase {
 	@Override
 	protected void processAction(TGActionContext context) {
 		MidiPlayerMode mode = MidiPlayer.getInstance(getContext()).getMode();
-		int increasedTempo = mode.getCurrentPercent() + 1;
+		int increasedTempo;
+		
+		if (mode.getCurrentPercent() < 100) {
+			increasedTempo = mode.getCurrentPercent() + 1;
+		} else {
+			increasedTempo = 100;
+		}
 		
 		TGActionProcessor tgActionProcessor = new TGActionProcessor(getContext(), TGChangeTempoPercentageAction.NAME);
 		tgActionProcessor.setAttribute(
